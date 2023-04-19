@@ -56,10 +56,9 @@
         border-radius: 5px;
         position: relative;
         top: 30px; left: 40px;
-
     }
-    
-    #barRightLeft{
+
+    #barHealth{
         box-sizing: inherit;
         position: relative;
         width: 100%;
@@ -67,7 +66,7 @@
         background: red;
     }
 
-    #barRightLeftText{
+    #playerHpText{
         box-sizing: inherit;
         position: relative;
         text-align: left;
@@ -118,14 +117,22 @@
     <button id="buttonIntimidate">Intimidate</button>
 </div>
 
+<div id = DevAttackButtons>
+<button id="OrcAttacks" onclick="PlayerDamageByOrc()">OrcAttack</button>
+<button id="MageAttacks" onclick="PlayerDamageByMage()">MageAttack</button>
+<button id="TownsfolkAttacks" onclick="PlayerDamageByTownsfolk()">TownsfolkAttack</button>
+</div>
+
 <div id=gameScreen>
     <div id="player"></div>
     <div id="playerHpBar">
-        <div id="barRightLeft"></div>
-        <div id="barRightLeftText">Player Hp</div>
+        <div id="barHealth"></div>
+        <div id="playerHpText">Player Hp</div>
     </div>
 </div>
 
+
+<!--This text will be gone and later be in the popup for the player-->
 <h1>Choose between Physical, Magic or Intimidate.</h1>
 <h2>Physical : Fight Orcs</h2>
 <h2>Magic : Fight Mages</h2>
@@ -134,38 +141,90 @@
 <script>
 
 var playerHp = 100;
-var OrcDamageValue = 10;
-var mageDamageValue = 8;
-var townsfolkDamageValue = 5;
 
-var enemyDamage;
 
+//An array of enemies that have properties to them. Will probably ad sfx properties here aswell.
 var enemies = [ 
 {Orc: "OrcImage", minDamage: 5, maxDamage:10},
-{mage: "MageImage", minDamage: 3, maxDamage:8},
-{townsfolk: "TownsfolkImage", minDamage: 3, maxDamage:8}
+{mage: "MageImage", minDamage: 3, maxDamage:6},
+{townsfolk: "TownsfolkImage", minDamage: 1, maxDamage:3}
 ];
 
 
-function EnemyAttackHandler ()
-{
-//Enter a random enemy in here and use the min and max damage to calculate the damage ont the player 
+//I want the program to start the introduction at the start.
+Introduction()
 
-enemyDamageValue = 1;
+
+
+
+function Introduction()
+{
+// Make a pop up that introduces the player  and asks for the users name and replace the name below playerHpBar with said name.
+// Make it so the user can press outside the box and it will go away.
+// Make the rest of the game start. (Timers and start showing the enemy and Player.)
 }
 
 
-function PlayerDamage()
+function EnemySpawnHandler ()
 {
-    playerHp -= OrcDamageValue;
-    document.getElementById("barRightLeft").style.width = playerHp + "%";
-    console.log("The players hp is now at: " + playerHp + "%");
+//Make the enemies pop up from the enemies array.
 }
 
-function AttackOrc()
+function SfxHandler(sfxtype)
 {
+    //Make a sound play depending on what the sfx type is inpouted in the function SfxHandler.
+    //Will probably be enemyTakingDamage, PlayerTakingDamage etc 
+} 
+
+
+
+function PlayerDamageByOrc()
+{
+    var damage = getRandomInt(enemies[0].minDamage,enemies[0].maxDamage)
+    playerHp -= damage
+    document.getElementById("barHealth").style.width = playerHp + "%";
+    console.log("Orc hit the player with: " + damage + ". The player is now at :" + playerHp + "%");
+    if (playerHp < 0){
+        KillPlayer();} 
+}
+
+function PlayerDamageByMage()
+{
+    var damage = getRandomInt(enemies[1].minDamage,enemies[1].maxDamage)
+    playerHp -= damage
+    document.getElementById("barHealth").style.width = playerHp + "%";
+    console.log("Mage hit the player with: " + damage + ". The player is now at :" + playerHp + "%");
+    if (playerHp < 0){
+        KillPlayer();} 
+}
+
+function PlayerDamageByTownsfolk()
+{
+    var damage = getRandomInt(enemies[2].minDamage,enemies[2].maxDamage)
+    playerHp -= damage
+    document.getElementById("barHealth").style.width = playerHp + "%";
+    console.log("Townsfolk hit the player with: " + damage + ". The player is now at :" + playerHp + "%");
+    if (playerHp < 0){
+        KillPlayer();} 
+}
+
+
+//Instead of calculating the random value in each function I decided to make it separate. So This function takes a value from the Damage scripts and returns the randomized value. 
+//Not a necessary function but I wanted to explore different methods to return a value from other functions.
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+//When this gets called it will change som css and do some functions
+function KillPlayer()
+{
+    document.getElementById("barHealth").style.width = 0 + "%";
+    //Add a game over popup with the Highscore.
+    //add a Restart game function and start it here?
 
 }
+
+
 
 
 
