@@ -9,3 +9,6 @@ For example:
 
 - 2023-4-19 12:00 Worked for 4 hours.
 - *Made more dev functions so the functions for the damage works. Randomized function so the damage numbers gets random between min and max value depending on the enemy.*
+
+- 2023-4-20 22:00 Worked for 2 hours.
+- *Tried getting pictures into the html - failed. Then tried changing them in css but I havent still gotten it right*
