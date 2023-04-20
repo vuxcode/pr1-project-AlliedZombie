@@ -7,106 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="dark">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 
 <style>
-    button{
-        width: 20vw;
-        height: 10vh;
-        background-color: gray;
-        border-radius: 10%;
-        border: 0px;
-        font-family:fantasy;
-        color: black;
-        font-size: 4vw;
-        margin-left: 10px;
-    }
-
-    button:hover{
-        color: #fff;
-    }
-
-    button:active{
-        animation-name: rotate;
-        animation-direction:reverse;
-        animation-duration: 0.1s;
-    }
-
-    #gameScreen{
-        width: 90vw;
-        height: 50vh;
-        background-color:rgb(117, 117, 117);
-        outline:solid 10px rgb(71, 71, 71);
-        border-radius:1px;
-        margin: auto;
-        margin-top: 5%;
-    }
-    #button_holder{
-        width: 100%;
-        position:absolute;
-        bottom: 10%;
-        text-align: center;
-    }
-
-    #playerHpBar{
-        
-        width: 30%;
-        height: 5%;
-        padding: 0.3%;
-        background: rgb(0, 0, 0);
-        border-radius: 5px;
-        position: relative;
-        top: 30px; left: 40px;
-    }
-
-    #barHealth{
-        box-sizing: inherit;
-        position: relative;
-        width: 100%;
-        height:100%;
-        background: red;
-    }
-
-    #playerHpText{
-        box-sizing: inherit;
-        position: relative;
-        text-align: left;
-        font-family: fantasy;
-        font-size: 2vh;
-    }
-
-    #buttonPhysical{
-        background:linear-gradient(45deg, rgb(233, 11, 11) 0%, rgb(139, 30, 22) 50%);
-    }
-
-    #buttonPhysical:hover{
-        background:linear-gradient(45deg, rgb(182, 10, 10) 0%, rgb(97, 19, 15) 50%);
-    }
-    
-    #buttonIntimidate{
-        background:linear-gradient(45deg, rgb(50, 46, 255) 0%, rgb(36, 10, 180) 50%);
-    }
-    
-    #buttonIntimidate:hover{
-        background:linear-gradient(45deg, rgb(12, 10, 187) 0%, rgb(22, 4, 121) 50%);
-    }
-    
-    #buttonMagic{
-        background:linear-gradient(45deg, rgb(113, 7, 235) 0%, rgb(190, 26, 155) 50%);     
-    }
    
-    #buttonMagic:hover{
-        background:linear-gradient(45deg, rgb(87, 18, 167) 0%, rgb(116, 12, 93) 50%); 
-    }
-
-    @keyframes rotate
-    {
-    0%{
-        transform:rotate(0);
-    }
-    100%{
-        transform:rotate(5deg);
-    }
-    }
 </style>
 </head>
 <body>
@@ -124,12 +28,16 @@
 </div>
 
 <div id=gameScreen>
-    <div id="player"></div>
-    <div id="playerHpBar">
-        <div id="barHealth"></div>
-        <div id="playerHpText">Player Hp</div>
+    <div class ="bgImage">
+        <div id="playerHpBar">
+            <div id="barHealth">
+                <div id="playerHpText">Player Hp</div>
+            </div>
+        </div>
     </div>
 </div>
+
+<div class ="bgImage"></div>
 
 
 <!--This text will be gone and later be in the popup for the player-->
@@ -138,6 +46,14 @@
 <h2>Magic : Fight Mages</h2>
 <h2>Intimidate : Fight Townsfolk</h2>
 
+<!--
+<img src="bg_o.png" alt="Background Image" id="BackgroundImage" style="float:left;width:50%;height:100%;">
+<img src="adventurer_o_idle.png" alt="Adventurer Image" id="AdventurerImage">
+
+<img src="orc_o.png" alt="Orc Image" id="OrcImage">
+<img src="mage_o.png" alt="Mage Image" id="MageImage">
+<img src="" alt="Townsfolk Image" id="TownsfolkImage">
+-->
 <script>
 
 var playerHp = 100;
