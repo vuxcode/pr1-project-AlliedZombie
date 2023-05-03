@@ -33,9 +33,24 @@ button:active{
     margin: auto;
     margin-top: 5%;
     position:relative;
+    overflow: hidden;
 }
 
 .Introduction
+{
+    position: absolute;
+    background-color: gray;
+    background-position: center;
+    text-align: center;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    font-size: 100%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.GameOverScreen
 {
     position: absolute;
     background-color: gray;
@@ -64,6 +79,76 @@ button:active{
     position:relative;
 }
 
+
+
+#PlayerChar{
+    background-image:url("adventurer_o_idle.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 10vh;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    
+    animation-name: PlayerAnim;
+    animation-timing-function: ease-in;
+    animation-direction:normal;
+    animation-duration: 0.5s;
+
+
+}
+@keyframes PlayerAnim
+{
+    from
+    {
+        transform: translateX(-50vh);
+    }
+    to
+    {
+      transform: translateX(0);
+    }
+}
+
+#EnemyOrc{
+    background-image:url("orc_o.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 90vh;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#EnemyMage{
+    background-image:url("mage_o.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#EnemyTownsfolk{
+    background-image:url("townsfolk_o.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+@keyframes EnemyAnim
+{
+    from
+    {
+        transform: translateX(50vh);
+    }
+    to
+    {
+      transform: translateX(0);
+    }
+}
 #button_holder{
     width: 100%;
     position:absolute;

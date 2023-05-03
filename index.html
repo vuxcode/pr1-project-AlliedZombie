@@ -28,30 +28,35 @@
 </div>
 
 <div class=gameScreen>
-
-    
-
     <div class ="bgImage">
-        <div id="playerHpBar">
-            <div id="barHealth">
-                <div id="playerHpText">Player</div>
+        <div class = Enemies>
+            <div id = "EnemyOrc" style = "display: none;"></div>
+            <div id = "EnemyMage" style = "display: none;"></div>
+            <div id = "EnemyTownsfolk" style = "display: none;"></div>
+        </div>
+        <div class = "Player" id = "Player" style = "display: none;">
+            <div id = "PlayerChar"></div>
+            <div id = "playerHpBar">
+                <div id = "barHealth">
+                    <div id = "playerHpText">Player</div>
+                </div>
             </div>
         </div>
+        
     </div>
 
-    <div class = "Introduction">
-        
+    <div class = "Introduction" id ="Introduction" style="display:block;">
         <input type="text" name="name" id="PlayerInputName" placeholder="Your adventure name"/>
-        <button type="button" onclick="getPlayerInputName();">Check</button>
-        
         <h2>Your task is to *Bla Bla Bla* save the princess and *Bla Bla Bla* the monsters...</h2>
-        
         <h2>Understood? Good! May the gods be on your side in battle!</h2>
+        <button type="button" onclick="getPlayerInputName();">Fight</button>
     </div>
 
-    <div class="DeathScreen">
+    <div class="GameOverScreen" id="GameOverScreen" style = "display: none;">
 
-
+        <h1> Game Over </h1>
+        <h2> Your Highscore = </h2>
+        <h2 id="Score"></h2>
     </div>
 </div>
 
@@ -75,8 +80,7 @@
 <script>
 
 var playerHp = 100;
-var PlayerName = "";
-
+var playerHighScoreTest = 123456789;
 
 
 
@@ -95,25 +99,34 @@ function getPlayerInputName()
 {
     var PlayerName = document.getElementById("PlayerInputName").value;
     Introduction(PlayerName);
-    
 }
 
 
 
-function Introduction(PlayerName)
+function Introduction(playerInputName)
 {
 // Make a pop up that introduces the player  and asks for the users name and replace the name below playerHpBar with said name.
 // Make it so the user can press outside the box and it will go away.
 // Make the rest of the game start. (Timers and start showing the enemy and Player.)
-document.getElementById("playerHpText")
-
+document.getElementById("playerHpText").innerText = playerInputName;
+console.log("The text should change");
+document.getElementById("Introduction").style.display = "none";
+PlayerSpawnHandler();
+EnemySpawnHandler();
 }
 
 
+function PlayerSpawnHandler()
+{
+document.getElementById("Player").style.display="block"
+
+}
 
 function EnemySpawnHandler ()
 {
 //Make the enemies pop up from the enemies array.
+
+
 }
 
 function SfxHandler(sfxtype)
@@ -167,11 +180,15 @@ function KillPlayer()
     document.getElementById("barHealth").style.width = 0 + "%";
     //Add a game over popup with the Highscore.
     //add a Restart game function and start it here?
+    GameOverScreen();
 
 }
 
-
-
+function GameOverScreen(PlayerScore)
+{
+    document.getElementById("GameOverScreen").style.display = "block";
+    document.getElementById("Score").innerText = playerHighScoreTest;
+}
 
 
 </script>
