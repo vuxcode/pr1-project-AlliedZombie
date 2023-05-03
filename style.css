@@ -8,7 +8,7 @@ button{
     background-color: gray;
     border-radius: 10%;
     border: 0px;
-    font-family:fantasy;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: black;
     font-size: 4vw;
     margin-left: 10px;
@@ -24,7 +24,7 @@ button:active{
     animation-duration: 0.1s;
 }
 
-#gameScreen{
+.gameScreen{
     width: 90vw;
     height: 50vh;
     background-color:rgb(117, 117, 117);
@@ -32,17 +32,36 @@ button:active{
     border-radius:1px;
     margin: auto;
     margin-top: 5%;
+    position:relative;
+}
+
+.Introduction
+{
+    position: absolute;
+    background-color: gray;
+    background-position: center;
+    text-align: center;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    font-size: 100%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#PlayerInputName
+{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size:x-large;
 }
 
 .bgImage{
     background-image:url("bg_o.png");
     background-position: center;
     background-size: contain;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     height: 100%;
-    
-
-    
+    position:relative;
 }
 
 #button_holder{
@@ -75,32 +94,36 @@ button:active{
     box-sizing: inherit;
     position: relative;
     text-align: left;
-    font-family: fantasy;
+    font-family:  'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 2vh;
 }
 
 #buttonPhysical{
-    background:linear-gradient(45deg, rgb(233, 11, 11) 0%, rgb(139, 30, 22) 50%);
+    background:linear-gradient(45deg, rgb(23, 92, 23) 0%, rgb(24, 129, 10) 50%);
 }
 
 #buttonPhysical:hover{
-    background:linear-gradient(45deg, rgb(182, 10, 10) 0%, rgb(97, 19, 15) 50%);
+    background:linear-gradient(45deg, rgb(26, 92, 26) 0%, rgb(16, 87, 7) 50%);
 }
 
-#buttonIntimidate{
-    background:linear-gradient(45deg, rgb(50, 46, 255) 0%, rgb(36, 10, 180) 50%);
-}
 
-#buttonIntimidate:hover{
-    background:linear-gradient(45deg, rgb(12, 10, 187) 0%, rgb(22, 4, 121) 50%);
-}
 
 #buttonMagic{
-    background:linear-gradient(45deg, rgb(113, 7, 235) 0%, rgb(190, 26, 155) 50%);     
+    background:linear-gradient(45deg, rgb(233, 11, 11) 0%, rgb(139, 30, 22) 50%);
 }
 
 #buttonMagic:hover{
-    background:linear-gradient(45deg, rgb(87, 18, 167) 0%, rgb(116, 12, 93) 50%); 
+    background:linear-gradient(45deg, rgb(182, 10, 10) 0%, rgb(97, 19, 15) 50%);
+
+}
+
+
+#buttonIntimidate{
+    background:linear-gradient(45deg, rgb(194, 121, 13) 0%, rgb(134, 84, 8) 50%);
+}
+
+#buttonIntimidate:hover{
+    background:linear-gradient(45deg, rgb(150, 94, 10) 0%, rgb(102, 64, 6)50%);
 }
 
 @keyframes rotate

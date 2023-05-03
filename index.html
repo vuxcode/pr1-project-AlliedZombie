@@ -27,25 +27,43 @@
 <button id="TownsfolkAttacks" onclick="PlayerDamageByTownsfolk()">TownsfolkAttack</button>
 </div>
 
-<div id=gameScreen>
+<div class=gameScreen>
+
+    
+
     <div class ="bgImage">
         <div id="playerHpBar">
             <div id="barHealth">
-                <div id="playerHpText">Player Hp</div>
+                <div id="playerHpText">Player</div>
             </div>
         </div>
+    </div>
+
+    <div class = "Introduction">
+        
+        <input type="text" name="name" id="PlayerInputName" placeholder="Your adventure name"/>
+        <button type="button" onclick="getPlayerInputName();">Check</button>
+        
+        <h2>Your task is to *Bla Bla Bla* save the princess and *Bla Bla Bla* the monsters...</h2>
+        
+        <h2>Understood? Good! May the gods be on your side in battle!</h2>
+    </div>
+
+    <div class="DeathScreen">
+
+
     </div>
 </div>
 
 <div class ="bgImage"></div>
 
 
-<!--This text will be gone and later be in the popup for the player-->
+<!--This text will be gone and later be in the popup for the player
 <h1>Choose between Physical, Magic or Intimidate.</h1>
 <h2>Physical : Fight Orcs</h2>
 <h2>Magic : Fight Mages</h2>
 <h2>Intimidate : Fight Townsfolk</h2>
-
+-->
 <!--
 <img src="bg_o.png" alt="Background Image" id="BackgroundImage" style="float:left;width:50%;height:100%;">
 <img src="adventurer_o_idle.png" alt="Adventurer Image" id="AdventurerImage">
@@ -57,6 +75,10 @@
 <script>
 
 var playerHp = 100;
+var PlayerName = "";
+
+
+
 
 
 //An array of enemies that have properties to them. Will probably ad sfx properties here aswell.
@@ -68,17 +90,25 @@ var enemies = [
 
 
 //I want the program to start the introduction at the start.
-Introduction()
+
+function getPlayerInputName()
+{
+    var PlayerName = document.getElementById("PlayerInputName").value;
+    Introduction(PlayerName);
+    
+}
 
 
 
-
-function Introduction()
+function Introduction(PlayerName)
 {
 // Make a pop up that introduces the player  and asks for the users name and replace the name below playerHpBar with said name.
 // Make it so the user can press outside the box and it will go away.
 // Make the rest of the game start. (Timers and start showing the enemy and Player.)
+document.getElementById("playerHpText")
+
 }
+
 
 
 function EnemySpawnHandler ()
@@ -121,7 +151,7 @@ function PlayerDamageByTownsfolk()
     document.getElementById("barHealth").style.width = playerHp + "%";
     console.log("Townsfolk hit the player with: " + damage + ". The player is now at :" + playerHp + "%");
     if (playerHp < 0){
-        KillPlayer();} 
+        KillPlayer();}
 }
 
 
