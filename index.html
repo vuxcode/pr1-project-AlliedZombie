@@ -15,10 +15,10 @@
 </head>
 <body>
 
-<div id="button_holder"> 
-    <button id="buttonPhysical" onclick="PlayerDamage()">Physical</button>
-    <button id="buttonMagic">Magic</button>
-    <button id="buttonIntimidate">Intimidate</button>
+<div id="buttonHolder" style="display: none;"> 
+    <button id="buttonPhysical" onclick="PhysicalAttack()">Physical</button>
+    <button id="buttonMagic" onclick="MagicalAttack()">Magic</button>
+    <button id="buttonIntimidate" onclick="IntimidateAttack()">Intimidate</button>
 </div>
 
 <div id = DevAttackButtons>
@@ -32,13 +32,13 @@
         <div class = Enemies>
             <div id = "EnemyOrc" style = "display: none;"></div>
             <div id = "EnemyMage" style = "display: none;"></div>
-            <div id = "EnemyTownsfolk" style = "display: block;"></div>
+            <div id = "EnemyTownsfolk" style = "display: none;"></div>
         </div>
         <div class = "Player" id = "Player" style = "display: none;">
             <div id = "PlayerChar"></div>
             <div id = "playerHpBar">
                 <div id = "barHealth">
-                    <div id = "playerHpText">Player</div>
+                    <div id = "playerHpText"></div>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
         <input type="text" name="name" id="PlayerInputName" placeholder="Your adventure name"/>
         <h2>Your task is to *Bla Bla Bla* save the princess and *Bla Bla Bla* the monsters...</h2>
         <h2>Understood? Good! May the gods be on your side in battle!</h2>
-        <button type="button" onclick="getPlayerInputName();">Fight</button>
+        <button type="button" id="IntroButton" onclick="getPlayerInputName();">Fight</button>
     </div>
 
     <div class="GameOverScreen" id="GameOverScreen" style = "display: none;">
@@ -67,15 +67,16 @@
 
 var playerHp = 100;
 var playerHighScoreTest = 123456789;
+var random = Math.random();
 
 
-
+var enemies = ["Orc", "Mage", "Townsfolk"];
 
 //An array of enemies that have properties to them. Will probably ad sfx properties here aswell.
-var enemies = [ 
-{Orc: "OrcImage", minDamage: 5, maxDamage:10},
-{mage: "MageImage", minDamage: 3, maxDamage:6},
-{townsfolk: "TownsfolkImage", minDamage: 1, maxDamage:3}
+var enemyProperty = [ 
+{charImageId: "EnemyOrc", minDamage: 5, maxDamage:10},
+{charImageId: "EnemyMage", minDamage: 3, maxDamage:6},
+{charImageId: "EnemyTownsfolk", minDamage: 1, maxDamage:3}
 ];
 
 
@@ -84,6 +85,10 @@ var enemies = [
 function getPlayerInputName()
 {
     var PlayerName = document.getElementById("PlayerInputName").value;
+    if (PlayerName == "" || PlayerName == null)
+    {
+        PlayerName = "Adventurer"
+    }
     Introduction(PlayerName);
 }
 
@@ -91,41 +96,84 @@ function getPlayerInputName()
 
 function Introduction(playerInputName)
 {
-// Make a pop up that introduces the player  and asks for the users name and replace the name below playerHpBar with said name.
-// Make it so the user can press outside the box and it will go away.
-// Make the rest of the game start. (Timers and start showing the enemy and Player.)
-document.getElementById("playerHpText").innerText = playerInputName;
-console.log("The text should change");
-document.getElementById("Introduction").style.display = "none";
-PlayerSpawnHandler();
-EnemySpawnHandler();
+    // Make a pop up that introduces the player  and asks for the users name and replace the name below playerHpBar with said name.
+    // Make it so the user can press outside the box and it will go away.
+    // Make the rest of the game start. (Timers and start showing the enemy and Player.)
+
+    document.getElementById("playerHpText").innerText = playerInputName;
+    console.log("The players name is: " + playerInputName);
+    document.getElementById("Introduction").style.display = "none";
+    document.getElementById("Player").style.display="block";
+    document.getElementById("buttonHolder").style.display="block";
+    EnemySpawnHandler();
 }
 
-
-function PlayerSpawnHandler()
-{
-document.getElementById("Player").style.display="block"
-
-}
 
 function EnemySpawnHandler ()
 {
-//Make the enemies pop up from the enemies array.
-
+    var enemy = enemies[Math.floor(random * enemies.length)]
+    console.log("The Random enemy is: " + enemy)
+    switch (enemy)
+        {
+            case "Orc":
+                EnemyIntro(enemyProperty[0].charImageId)
+                break;
+            case "Mage":
+                EnemyIntro(enemyProperty[1].charImageId)
+                break;
+            case "Townsfolk":
+                EnemyIntro(enemyProperty[2].charImageId)
+                break;
+    }
 
 }
 
-function SfxHandler(sfxtype)
+function EnemyIntro(Enemy)
 {
-    //Make a sound play depending on what the sfx type is inpouted in the function SfxHandler.
-    //Will probably be enemyTakingDamage, PlayerTakingDamage etc 
-} 
+    document.getElementById(Enemy).style.display="block";
+    EnemyStatus(Enemy)
+}
+
+function EnemyStatus(Enemy)
+{
+    setTimeout(EnemyExit,3000,Enemy)
+}
+
+function EnemyExit(Enemy)
+{
+    console.log("EnemyExit")
+    document.getElementById(Enemy).style.animationName = "EnemyExitAnim";
+    //document.getElementById(Enemy).style.backgroundPosition = "left";
+
+}
+//#region PlayerAttacks
+
+function PhysicalAttack()
+{
+    console.log("Player used Physical Attack")
+
+}
+
+function MagicalAttack()
+{
+    console.log("Player used Magical Attack")
+}
+
+function IntimidateAttack()
+{
+    console.log("Player used Intimidate Attack")    
+}
+
+//#endregion
+
+
+
 
 
 
 function PlayerDamageByOrc()
 {
-    var damage = getRandomInt(enemies[0].minDamage,enemies[0].maxDamage)
+    var damage = getRandomInt(enemyProperty[0].minDamage,enemyProperty[0].maxDamage)
     playerHp -= damage
     document.getElementById("barHealth").style.width = playerHp + "%";
     console.log("Orc hit the player with: " + damage + ". The player is now at :" + playerHp + "%");
@@ -135,7 +183,7 @@ function PlayerDamageByOrc()
 
 function PlayerDamageByMage()
 {
-    var damage = getRandomInt(enemies[1].minDamage,enemies[1].maxDamage)
+    var damage = getRandomInt(enemyProperty[1].minDamage,enemyProperty[1].maxDamage)
     playerHp -= damage
     document.getElementById("barHealth").style.width = playerHp + "%";
     console.log("Mage hit the player with: " + damage + ". The player is now at :" + playerHp + "%");
@@ -145,7 +193,7 @@ function PlayerDamageByMage()
 
 function PlayerDamageByTownsfolk()
 {
-    var damage = getRandomInt(enemies[2].minDamage,enemies[2].maxDamage)
+    var damage = getRandomInt(enemyProperty[2].minDamage,enemyProperty[2].maxDamage)
     playerHp -= damage
     document.getElementById("barHealth").style.width = playerHp + "%";
     console.log("Townsfolk hit the player with: " + damage + ". The player is now at :" + playerHp + "%");
@@ -156,7 +204,8 @@ function PlayerDamageByTownsfolk()
 
 //Instead of calculating the random value in each function I decided to make it separate. So This function takes a value from the Damage scripts and returns the randomized value. 
 //Not a necessary function but I wanted to explore different methods to return a value from other functions.
-function getRandomInt(min, max) {
+function getRandomInt(min, max) 
+{
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
@@ -170,9 +219,16 @@ function KillPlayer()
 
 }
 
+function SfxHandler(sfxtype)
+{
+    //Make a sound play depending on what the sfx type is inpouted in the function SfxHandler.
+    //Will probably be enemyTakingDamage, PlayerTakingDamage etc 
+} 
+
 function GameOverScreen(PlayerScore)
 {
     document.getElementById("GameOverScreen").style.display = "block";
+    document.getElementById("buttonHolder").style.display="none";
     document.getElementById("Score").innerText = playerHighScoreTest;
 }
 

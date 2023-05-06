@@ -19,4 +19,7 @@ For example:
 - 2023-5-3 22:00 Worked for 3 hours.
   - *Put the pictures into the css instead and that worked. Also made a animation for the characters to load in to the scene. Made a intro screen that disapears when the user have typed their name and that the name get typed on the HP bar.*
 
+- 2023-5-6 22:00 Worked for 4 hours.
+  - *Made player and enemy functions with custom animation curves. Tried to make the character exit aswell but Is really stuck with the css. A random EnemySpawner so its a random enemy each time. Made som buttons appear and changed the UI abit. Also made it so if the player does not input any name it will be called Adventurer anyway.* 
+
 
