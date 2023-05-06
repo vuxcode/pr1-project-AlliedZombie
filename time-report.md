@@ -12,3 +12,11 @@ For example:
 
 - 2023-4-20 22:00 Worked for 2 hours.
   - *Tried getting pictures into the html - failed. Then tried changing them in css but I havent still gotten it right*
+
+- 2023-5-1 22:00 Worked for 2 hours.
+  - *Made the background fit the background. Made a intro screen*
+
+- 2023-5-3 22:00 Worked for 3 hours.
+  - *Put the pictures into the css instead and that worked. Also made a animation for the characters to load in to the scene. Made a intro screen that disapears when the user have typed their name and that the name get typed on the HP bar.*
+
+
