@@ -20,7 +20,7 @@
     <button id="buttonMagic" onclick="MagicalAttack()">Magic</button>
     <button id="buttonIntimidate" onclick="IntimidateAttack()">Intimidate</button>
 </div>
-
+<!---->
 <div id = DevAttackButtons>
 <button id="OrcAttacks" onclick="PlayerDamageByOrc()">OrcAttack</button>
 <button id="MageAttacks" onclick="PlayerDamageByMage()">MageAttack</button>
@@ -29,7 +29,7 @@
 
 <div class=gameScreen>
     <div class ="bgImage">
-        <div class = Enemies>
+        <div class = "Enemies">
             <div id = "EnemyOrc" style = "display: none;"></div>
             <div id = "EnemyMage" style = "display: none;"></div>
             <div id = "EnemyTownsfolk" style = "display: none;"></div>
@@ -67,9 +67,11 @@
 
 var playerHp = 100;
 var playerHighScoreTest = 123456789;
+var enemiesDestroyed;
 var random = Math.random();
 
 
+var enemy;
 var enemies = ["Orc", "Mage", "Townsfolk"];
 
 //An array of enemies that have properties to them. Will probably ad sfx properties here aswell.
@@ -92,8 +94,6 @@ function getPlayerInputName()
     Introduction(PlayerName);
 }
 
-
-
 function Introduction(playerInputName)
 {
     // Make a pop up that introduces the player  and asks for the users name and replace the name below playerHpBar with said name.
@@ -111,7 +111,7 @@ function Introduction(playerInputName)
 
 function EnemySpawnHandler ()
 {
-    var enemy = enemies[Math.floor(random * enemies.length)]
+    enemy = enemies[Math.floor(random * enemies.length)]
     console.log("The Random enemy is: " + enemy)
     switch (enemy)
         {
@@ -125,43 +125,82 @@ function EnemySpawnHandler ()
                 EnemyIntro(enemyProperty[2].charImageId)
                 break;
     }
-
 }
 
 function EnemyIntro(Enemy)
 {
     document.getElementById(Enemy).style.display="block";
-    EnemyStatus(Enemy)
+    //EnemyStatus(Enemy)
 }
 
+/*
 function EnemyStatus(Enemy)
 {
     setTimeout(EnemyExit,3000,Enemy)
 }
+*/
 
 function EnemyExit(Enemy)
 {
     console.log("EnemyExit")
     document.getElementById(Enemy).style.animationName = "EnemyExitAnim";
-    //document.getElementById(Enemy).style.backgroundPosition = "left";
-
+    enemiesDestroyed ++;
+    EnemySpawnHandler();
 }
 //#region PlayerAttacks
 
 function PhysicalAttack()
-{
+{ 
+    switch(enemy)
+        {
+            case "Orc":
+                EnemyExit("EnemyOrc");
+                break;
+            case "Mage":
+                PlayerDamageByMage();
+                break;
+            case "Townsfolk":
+                PlayerDamageByTownsfolk();
+                break;
+        }
+        console.log(enemy);    
     console.log("Player used Physical Attack")
-
 }
 
 function MagicalAttack()
 {
+    switch(enemy)
+        {
+            case "Orc":
+                PlayerDamageByOrc();
+                break;
+            case "Mage":
+                EnemyExit("EnemyMage");
+                break;
+            case "Townsfolk":
+                PlayerDamageByTownsfolk();
+                break;
+        }
+    console.log(enemy);
     console.log("Player used Magical Attack")
 }
 
 function IntimidateAttack()
 {
-    console.log("Player used Intimidate Attack")    
+    switch(enemy)
+        {
+            case "Orc":
+                PlayerDamageByOrc();
+                break;
+            case "Mage":
+                PlayerDamageByMage();
+                break;
+            case "Townsfolk":
+                EnemyExit("EnemyTownsfolk");
+                break;
+        }
+    console.log("Player used Intimidate Attack")
+    console.log(enemy);   
 }
 
 //#endregion

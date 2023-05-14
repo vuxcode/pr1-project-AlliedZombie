@@ -133,6 +133,7 @@ https://cubic-bezier.com/#.86,.43,.38,1.29
     animation-name: EnemyIntroAnim;
     animation-timing-function: cubic-bezier(.86,.43,.38,1.29);
     animation-direction:normal;
+    animation-fill-mode: forwards;
     animation-duration: 0.5s;
     
 }
@@ -148,6 +149,7 @@ https://cubic-bezier.com/#.86,.43,.38,1.29
     animation-name: EnemyIntroAnim;
     animation-timing-function: cubic-bezier(.86,.43,.38,1.29);
     animation-direction:normal;
+    animation-fill-mode: forwards;
     animation-duration: 0.5s;
     
 }
@@ -163,6 +165,7 @@ https://cubic-bezier.com/#.86,.43,.38,1.29
     animation-name: EnemyIntroAnim;
     animation-timing-function: cubic-bezier(.86,.43,.38,1.29);
     animation-direction:normal;
+    animation-fill-mode: forwards;
     animation-duration: 0.5s;
     
 }
