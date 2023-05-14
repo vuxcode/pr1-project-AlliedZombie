@@ -22,14 +22,14 @@
 </div>
 <!---->
 <div id = DevAttackButtons>
-<button id="OrcAttacks" onclick="PlayerDamageByOrc()">OrcAttack</button>
-<button id="MageAttacks" onclick="PlayerDamageByMage()">MageAttack</button>
-<button id="TownsfolkAttacks" onclick="PlayerDamageByTownsfolk()">TownsfolkAttack</button>
+<button id="OrcAttacks" onclick="DamageByOrc()">OrcAttack</button>
+<button id="MageAttacks" onclick="DamageByMage()">MageAttack</button>
+<button id="TownsfolkAttacks" onclick="DamageByTownsfolk()">TownsfolkAttack</button>
 </div>
 
 <div class=gameScreen>
     <div class ="bgImage">
-        <div class = "Enemies">
+        <div class = "Enemies" id = Enemies>
             <div id = "EnemyOrc" style = "display: none;"></div>
             <div id = "EnemyMage" style = "display: none;"></div>
             <div id = "EnemyTownsfolk" style = "display: none;"></div>
@@ -66,19 +66,16 @@
 <script>
 
 var playerHp = 100;
-var playerHighScoreTest = 123456789;
-var enemiesDestroyed;
-var random = Math.random();
-
-
+var enemiesDestroyed = 0;
 var enemy;
 var enemies = ["Orc", "Mage", "Townsfolk"];
+var gameTimer = 30;
 
 //An array of enemies that have properties to them. Will probably ad sfx properties here aswell.
 var enemyProperty = [ 
-{charImageId: "EnemyOrc", minDamage: 5, maxDamage:10},
-{charImageId: "EnemyMage", minDamage: 3, maxDamage:6},
-{charImageId: "EnemyTownsfolk", minDamage: 1, maxDamage:3}
+{charImageId: "EnemyOrc", minDamage: 18, maxDamage:25},
+{charImageId: "EnemyMage", minDamage: 15, maxDamage:20},
+{charImageId: "EnemyTownsfolk", minDamage: 12, maxDamage:18}
 ];
 
 
@@ -106,23 +103,45 @@ function Introduction(playerInputName)
     document.getElementById("Player").style.display="block";
     document.getElementById("buttonHolder").style.display="block";
     EnemySpawnHandler();
+    Timer();
 }
 
+function Timer()
+{
+    console.log(gameTimer);
+    if(gameTimer>0)
+    {
+        gameTimer--;
+        setTimeout(Timer,1000);
+    }
+    else
+    {
+        GameOverScreen();
+    }
+}
+
+function GetRandomEnemy()
+{
+    return enemies[Math.floor(Math.random() * enemies.length)]
+}
 
 function EnemySpawnHandler ()
 {
-    enemy = enemies[Math.floor(random * enemies.length)]
+    enemy = GetRandomEnemy(enemies);
     console.log("The Random enemy is: " + enemy)
     switch (enemy)
         {
             case "Orc":
                 EnemyIntro(enemyProperty[0].charImageId)
+                document.getElementById(enemyProperty[0].charImageId).style.animationName = "EnemyIntroAnim";
                 break;
             case "Mage":
                 EnemyIntro(enemyProperty[1].charImageId)
+                document.getElementById(enemyProperty[1].charImageId).style.animationName = "EnemyIntroAnim";
                 break;
             case "Townsfolk":
                 EnemyIntro(enemyProperty[2].charImageId)
+                document.getElementById(enemyProperty[2].charImageId).style.animationName = "EnemyIntroAnim";
                 break;
     }
 }
@@ -130,22 +149,15 @@ function EnemySpawnHandler ()
 function EnemyIntro(Enemy)
 {
     document.getElementById(Enemy).style.display="block";
-    //EnemyStatus(Enemy)
 }
 
-/*
-function EnemyStatus(Enemy)
-{
-    setTimeout(EnemyExit,3000,Enemy)
-}
-*/
 
 function EnemyExit(Enemy)
 {
     console.log("EnemyExit")
     document.getElementById(Enemy).style.animationName = "EnemyExitAnim";
     enemiesDestroyed ++;
-    EnemySpawnHandler();
+    setTimeout (EnemySpawnHandler, 500);
 }
 //#region PlayerAttacks
 
@@ -157,13 +169,12 @@ function PhysicalAttack()
                 EnemyExit("EnemyOrc");
                 break;
             case "Mage":
-                PlayerDamageByMage();
+                DamageByMage();
                 break;
             case "Townsfolk":
-                PlayerDamageByTownsfolk();
-                break;
+                DamageByTownsfolk();
         }
-        console.log(enemy);    
+    console.log(enemy);    
     console.log("Player used Physical Attack")
 }
 
@@ -172,13 +183,13 @@ function MagicalAttack()
     switch(enemy)
         {
             case "Orc":
-                PlayerDamageByOrc();
+                DamageByOrc();
                 break;
             case "Mage":
                 EnemyExit("EnemyMage");
                 break;
             case "Townsfolk":
-                PlayerDamageByTownsfolk();
+                DamageByTownsfolk();
                 break;
         }
     console.log(enemy);
@@ -190,17 +201,17 @@ function IntimidateAttack()
     switch(enemy)
         {
             case "Orc":
-                PlayerDamageByOrc();
+                DamageByOrc();
                 break;
             case "Mage":
-                PlayerDamageByMage();
-                break;
+                DamageByMage();
             case "Townsfolk":
                 EnemyExit("EnemyTownsfolk");
                 break;
         }
+    console.log(enemy);  
     console.log("Player used Intimidate Attack")
-    console.log(enemy);   
+     
 }
 
 //#endregion
@@ -210,7 +221,7 @@ function IntimidateAttack()
 
 
 
-function PlayerDamageByOrc()
+function DamageByOrc()
 {
     var damage = getRandomInt(enemyProperty[0].minDamage,enemyProperty[0].maxDamage)
     playerHp -= damage
@@ -220,7 +231,7 @@ function PlayerDamageByOrc()
         KillPlayer();} 
 }
 
-function PlayerDamageByMage()
+function DamageByMage()
 {
     var damage = getRandomInt(enemyProperty[1].minDamage,enemyProperty[1].maxDamage)
     playerHp -= damage
@@ -230,7 +241,7 @@ function PlayerDamageByMage()
         KillPlayer();} 
 }
 
-function PlayerDamageByTownsfolk()
+function DamageByTownsfolk()
 {
     var damage = getRandomInt(enemyProperty[2].minDamage,enemyProperty[2].maxDamage)
     playerHp -= damage
@@ -266,9 +277,17 @@ function SfxHandler(sfxtype)
 
 function GameOverScreen(PlayerScore)
 {
+    if(playerHp>0)
+    {
+        document.getElementById("Enemies").style.display="none";
+    }
+    else
+    {
+        document.getElementById("Player").style.display="none";
+    }
     document.getElementById("GameOverScreen").style.display = "block";
     document.getElementById("buttonHolder").style.display="none";
-    document.getElementById("Score").innerText = playerHighScoreTest;
+    document.getElementById("Score").innerText = enemiesDestroyed;
 }
 
 

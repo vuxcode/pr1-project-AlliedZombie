@@ -22,4 +22,6 @@ For example:
 - 2023-5-6 22:00 Worked for 4 hours.
   - *Made player and enemy functions with custom animation curves. Tried to make the character exit aswell but Is really stuck with the css. A random EnemySpawner so its a random enemy each time. Made som buttons appear and changed the UI abit. Also made it so if the player does not input any name it will be called Adventurer anyway.* 
 
+- 2023-5-14 23:00 Worked for 4 hours.
+  - *Made changes to the animations and the spawnHandler. So its a random enemy that spawns everytime. Aswell as a timer so the enemies are up just for 30 seconds. If the player dies before that the game ends Changed the ending screen aswell so the enemies stay if the player died and vice versa if the player survived the games duration*  
 
