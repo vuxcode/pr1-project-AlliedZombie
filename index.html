@@ -73,9 +73,10 @@
 var playerHp = 100;
 var enemiesDestroyed = 0;
 var enemy;
-var enemies = ["EnemyOrc", "EnemyMage", "EnemyTownsfolk"];
+var enemies = ["EnemyOrc","EnemyMage","EnemyTownsfolk"];
 var gameTimer = 30;
 var gameTimerFullProcentage = gameTimer;
+var PreviousEnemy;
 
 
 
@@ -145,14 +146,15 @@ function GetRandomEnemy()
     return enemies[Math.floor(Math.random() * enemies.length)]
 }
 
-function EnemySpawnHandler (PreviousEnemy)
+function EnemySpawnHandler (PreviousEnemy = undefined)
 {
-    if(PreviousEnemy === undefined) 
+    if(PreviousEnemy == undefined) 
     {
-        PreviousEnemy = GetRandomEnemy(enemies);
+        PreviousEnemy = GetRandomEnemy();
     }
+    
 
-    enemy = GetRandomEnemy(enemies);
+    enemy = GetRandomEnemy();
     if(!enemy == PreviousEnemy)
     {
         console.log("The Random enemy is: " + enemy)
@@ -174,7 +176,7 @@ function EnemySpawnHandler (PreviousEnemy)
     }
     else
     {
-        EnemySpawnHandler(PreviousEnemy);
+        EnemySpawnHandler();
     }
     
 }
