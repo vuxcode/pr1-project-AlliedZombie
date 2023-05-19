@@ -25,3 +25,6 @@ For example:
 - 2023-5-14 23:00 Worked for 4 hours.
   - *Made changes to the animations and the spawnHandler. So its a random enemy that spawns everytime. Aswell as a timer so the enemies are up just for 30 seconds. If the player dies before that the game ends Changed the ending screen aswell so the enemies stay if the player died and vice versa if the player survived the games duration*  
 
+- 2023-5-16 23:00 Worked for 4 hours.
+  - *Made changes to the randomizations of the enemy so the enemy does not start twice. Aswell as making a button to work together with the buttons on the screen.*  
+

@@ -77,14 +77,67 @@ var enemies = ["EnemyOrc","EnemyMage","EnemyTownsfolk"];
 var gameTimer = 30;
 var gameTimerFullProcentage = gameTimer;
 var PreviousEnemy;
+var gameStarted = false;
 
+// If I want to change what buttons that do what.
+var buttonPhysical = "KeyA"
+var buttonMagical = "KeyS"
+var buttonIntimidate = "KeyD"
+
+var physicalAttackButton = document.getElementById("buttonPhysical");
+var magicalAttackButton = document.getElementById("buttonMagic");
+var intimidateAttackButton = document.getElementById("buttonIntimidate");
+
+
+
+document.addEventListener("keydown",function (button){
+
+    if (gameStarted)
+    {
+        if(button.code === buttonPhysical)
+        {
+            console.log("I press the button " + button.code);
+            ButtonHandler(buttonPhysical);
+        }
+
+        else if(button.code === buttonMagical)
+        {
+            console.log("I press the button " + button.code);
+            ButtonHandler(buttonMagical);
+        }
+
+        else if(button.code === buttonIntimidate)
+        {
+            console.log("I press the button " + button.code);
+            ButtonHandler(buttonIntimidate);
+        }
+    }
+    
+
+});
+
+function ButtonHandler (buttonClicked)
+{
+    switch (buttonClicked)
+    {
+        case buttonPhysical:
+            PhysicalAttack();
+            break;
+        case buttonMagical:
+            MagicalAttack();
+            break;
+        case buttonIntimidate:
+            IntimidateAttack();
+            break;
+    }
+}
 
 
 //An array of enemies that have properties to them. Will probably ad sfx properties here aswell.
 var enemyProperty = [ 
-{charImageId: "EnemyOrc", minDamage: 18, maxDamage:25},
-{charImageId: "EnemyMage", minDamage: 15, maxDamage:20},
-{charImageId: "EnemyTownsfolk", minDamage: 12, maxDamage:18}
+{charImageId: "EnemyOrc", minDamage: 50, maxDamage:100},
+{charImageId: "EnemyMage", minDamage: 30, maxDamage:70},
+{charImageId: "EnemyTownsfolk", minDamage: 10, maxDamage:30}
 ];
 
 
@@ -112,6 +165,7 @@ function Introduction(playerInputName)
     document.getElementById("Player").style.display="block";
     document.getElementById("buttonHolder").style.display="block";
     document.getElementById("GameTimerBar").style.display="block";
+    gameStarted = true;
     EnemySpawnHandler();
     Timer();
 }
@@ -119,7 +173,7 @@ function Introduction(playerInputName)
 function Timer()
 {
 
-    console.log(gameTimer);
+    //console.log(gameTimer);
     if(gameTimer>0)
     {
         gameTimer--;
@@ -148,6 +202,7 @@ function GetRandomEnemy()
 
 function EnemySpawnHandler (PreviousEnemy = undefined)
 {
+    console.log("The previous enemy was: " + PreviousEnemy);
     if(PreviousEnemy == undefined) 
     {
         PreviousEnemy = GetRandomEnemy();
@@ -155,7 +210,7 @@ function EnemySpawnHandler (PreviousEnemy = undefined)
     
 
     enemy = GetRandomEnemy();
-    if(!enemy == PreviousEnemy)
+    if(enemy != PreviousEnemy)
     {
         console.log("The Random enemy is: " + enemy)
         switch (enemy)
@@ -176,7 +231,7 @@ function EnemySpawnHandler (PreviousEnemy = undefined)
     }
     else
     {
-        EnemySpawnHandler();
+        EnemySpawnHandler(PreviousEnemy);
     }
     
 }
