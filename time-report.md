@@ -28,3 +28,7 @@ For example:
 - 2023-5-16 23:00 Worked for 4 hours.
   - *Made changes to the randomizations of the enemy so the enemy does not start twice. Aswell as making a button to work together with the buttons on the screen.*  
 
+- 2023-5-20 21:00 Worked for 2 hours.
+  - *Made improvements to the codes readability using regions and explain what all the functions do. Also changed some of the ingame text and made a intro that explains the buttons etc. Changed README, Buglist, index and a line in CSS* 
+
+

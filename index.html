@@ -8,29 +8,18 @@
     <meta name="color-scheme" content="dark">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-
-<style>
-   
-</style>
 </head>
 <body>
-
+<!--#region Divs-->
+<!--Buttons-->
 <div id="buttonHolder" style="display: none;"> 
     <button id="buttonPhysical" onclick="PhysicalAttack()">Physical</button>
     <button id="buttonMagic" onclick="MagicalAttack()">Magic</button>
     <button id="buttonIntimidate" onclick="IntimidateAttack()">Intimidate</button>
 </div>
 
-<!--
-<div id = DevAttackButtons>
-<button id="OrcAttacks" onclick="DamageByOrc()">OrcAttack</button>
-<button id="MageAttacks" onclick="DamageByMage()">MageAttack</button>
-<button id="TownsfolkAttacks" onclick="DamageByTownsfolk()">TownsfolkAttack</button>
-</div>
--->
-
+<!--Game Screen Content-->
 <div class=gameScreen>
-    
     <div class ="bgImage">
         <div class = "Enemies" id = Enemies>
             <div id = "EnemyOrc" style = "display: none;"></div>
@@ -46,78 +35,124 @@
             </div>
         </div>
         <div id = "GameTimerBar" style = "display: none;" ></div>
-        
     </div>
 
+    <!--Introduction Screen-->
     <div class = "Introduction" id ="Introduction" style="display:block;">
         <input type="text" name="name" id="PlayerInputName" placeholder="Your adventure name"/>
-        <h2>Your task is to *Bla Bla Bla* save the princess and *Bla Bla Bla* the monsters...</h2>
-        <h2>Understood? Good! May the gods be on your side in battle!</h2>
+        <h2>Your task is to defeat the enemies by using the right attack</h2>
+        <h2>Use the buttons "A" "S" and "D" to attack with the appropriate attack</h2>
+        <h2 style="color: rgb(8, 109, 23);">Orc = Physical Attack / A </h2>
+        <h2 style="color: rgb(144, 48, 48);">Mage = Magical Attack / S</h2>
+        <h2 style="color: rgb(192, 150, 12);">Townsfolk = Intimidate Attack / D</h2>
         <button type="button" id="IntroButton" onclick="getPlayerInputName();">Fight</button>
     </div>
 
+    <!--Game Over Screen-->
     <div class="GameOverScreen" id="GameOverScreen" style = "display: none;">
-
         <h1> Game Over </h1>
         <h2> Your Highscore = </h2>
         <h2 id="Score"></h2>
     </div>
 </div>
 
+<!--#endregion Divs-->
 
-<div class ="bgImage"></div>
-
-<!-- Comment -->
 <script>
-
+//#region Variables
+// #Various Variables 
 var playerHp = 100;
-var enemiesDestroyed = 0;
-var enemy;
-var enemies = ["EnemyOrc","EnemyMage","EnemyTownsfolk"];
 var gameTimer = 30;
 var gameTimerFullProcentage = gameTimer;
-var PreviousEnemy;
 var gameStarted = false;
 
-// If I want to change what buttons that do what.
+// #Buttons
 var buttonPhysical = "KeyA"
 var buttonMagical = "KeyS"
 var buttonIntimidate = "KeyD"
 
+// #ButtonElement
 var physicalAttackButton = document.getElementById("buttonPhysical");
 var magicalAttackButton = document.getElementById("buttonMagic");
 var intimidateAttackButton = document.getElementById("buttonIntimidate");
 
+// #Enemies
+var enemy;
+var enemies = ["EnemyOrc","EnemyMage","EnemyTownsfolk"];
+var PreviousEnemy;
+var enemyTransition = false;
+var enemiesDestroyed = 0;
 
+//An array of enemies that have properties to them.
+var enemyProperty = [ 
+{charImageId: "EnemyOrc", minDamage: 50, maxDamage:100},
+{charImageId: "EnemyMage", minDamage: 30, maxDamage:70},
+{charImageId: "EnemyTownsfolk", minDamage: 10, maxDamage:30}];
+//#endregion
 
-document.addEventListener("keydown",function (button){
+//#region Name/Intro
+// Asks the user for their name. Incase the user does not input a name, the user gets the name "Adventurer". 
+function getPlayerInputName()
+{
+    var PlayerName = document.getElementById("PlayerInputName").value;
+    if (PlayerName == "" || PlayerName == null)
+    {
+        PlayerName = "Adventurer"
+    }
+    Introduction(PlayerName);
+}
 
+// This function enables / disables all the displays.
+// Also use the playerInputName as the ingame name. 
+function Introduction(playerInputName)
+{
+    document.getElementById("playerHpText").innerText = playerInputName;
+    console.log("The players name is: " + playerInputName);
+    document.getElementById("Introduction").style.display = "none";
+    document.getElementById("Player").style.display="block";
+    document.getElementById("buttonHolder").style.display="block";
+    document.getElementById("GameTimerBar").style.display="block";
+    gameStarted = true;
+    EnemySpawnHandler();
+    Timer();
+}
+//#endregion
+
+//#region Keybord Buttons
+// - This listens to what button is pressed on the keyboard.
+document.addEventListener("keydown",function (button)
+{
+    // - Checks if the game have started.
     if (gameStarted)
     {
+        // - If the button is the same as "buttonPhysical" ButtonHandler function is called with a specific value.
         if(button.code === buttonPhysical)
         {
             console.log("I press the button " + button.code);
             ButtonHandler(buttonPhysical);
         }
 
+        // - If the button is the same as "buttonMagical" ButtonHandler function is called with a specific value.
         else if(button.code === buttonMagical)
         {
             console.log("I press the button " + button.code);
             ButtonHandler(buttonMagical);
         }
 
+        // - If the button is the same as "buttonIntimidate" ButtonHandler function is called with a specific value.
         else if(button.code === buttonIntimidate)
         {
             console.log("I press the button " + button.code);
             ButtonHandler(buttonIntimidate);
         }
     }
-    
-
 });
 
+// Gets called and the input in this function is the button that is clicked.
 function ButtonHandler (buttonClicked)
 {
+    // Switch statement based on what button is inputed into the function.
+    // Starts a function if the requirement is met.
     switch (buttonClicked)
     {
         case buttonPhysical:
@@ -131,49 +166,12 @@ function ButtonHandler (buttonClicked)
             break;
     }
 }
+//#endregion 
 
-
-//An array of enemies that have properties to them. Will probably ad sfx properties here aswell.
-var enemyProperty = [ 
-{charImageId: "EnemyOrc", minDamage: 50, maxDamage:100},
-{charImageId: "EnemyMage", minDamage: 30, maxDamage:70},
-{charImageId: "EnemyTownsfolk", minDamage: 10, maxDamage:30}
-];
-
-
-//I want the program to start the introduction at the start.
-
-function getPlayerInputName()
-{
-    var PlayerName = document.getElementById("PlayerInputName").value;
-    if (PlayerName == "" || PlayerName == null)
-    {
-        PlayerName = "Adventurer"
-    }
-    Introduction(PlayerName);
-}
-
-function Introduction(playerInputName)
-{
-    // Make a pop up that introduces the player  and asks for the users name and replace the name below playerHpBar with said name.
-    // Make it so the user can press outside the box and it will go away.
-    // Make the rest of the game start. (Timers and start showing the enemy and Player.)
-
-    document.getElementById("playerHpText").innerText = playerInputName;
-    console.log("The players name is: " + playerInputName);
-    document.getElementById("Introduction").style.display = "none";
-    document.getElementById("Player").style.display="block";
-    document.getElementById("buttonHolder").style.display="block";
-    document.getElementById("GameTimerBar").style.display="block";
-    gameStarted = true;
-    EnemySpawnHandler();
-    Timer();
-}
-
+//#region Timer
+// Checks if the gameTimer is more than 0 othervise gameOverScreen function is called.
 function Timer()
 {
-
-    //console.log(gameTimer);
     if(gameTimer>0)
     {
         gameTimer--;
@@ -183,25 +181,30 @@ function Timer()
     {
         GameOverScreen();
     }
+
+    //The timer bar on the screen is calculated.
     var CurrentGameTimeProcentage = CalculateProcentage(gameTimer, gameTimerFullProcentage)
     document.getElementById("GameTimerBar").style.width = CurrentGameTimeProcentage + "%";
 }
 
+//Calculates the procentage out of the starting value.
 function CalculateProcentage(x,y)
 {
     return (x * 100)/y;
 }
-//Calcluate the starting 100% in a separate variable
-//for each second the second goes down it should be in % of 100%.
+//#endregion
 
-
+//#region Enemyloop
+// Gets a random enemy out of the enemy array.
 function GetRandomEnemy()
 {
     return enemies[Math.floor(Math.random() * enemies.length)]
 }
 
+//Spawns a enemy from GetRandomEnemy function. If there was a previous enemy that enemy wont be repeated.
 function EnemySpawnHandler (PreviousEnemy = undefined)
 {
+    enemyTransition=false;
     console.log("The previous enemy was: " + PreviousEnemy);
     if(PreviousEnemy == undefined) 
     {
@@ -215,15 +218,15 @@ function EnemySpawnHandler (PreviousEnemy = undefined)
         console.log("The Random enemy is: " + enemy)
         switch (enemy)
             {
-                case "EnemyOrc":
+                case enemies[0]:
                     EnemyIntro(enemyProperty[0].charImageId)
                     document.getElementById(enemyProperty[0].charImageId).style.animationName = "EnemyIntroAnim";
                     break;
-                case "EnemyMage":
+                case enemies[1]:
                     EnemyIntro(enemyProperty[1].charImageId)
                     document.getElementById(enemyProperty[1].charImageId).style.animationName = "EnemyIntroAnim";                        
                     break;
-                case "EnemyTownsfolk":
+                case enemies[2]:
                     EnemyIntro(enemyProperty[2].charImageId)
                     document.getElementById(enemyProperty[2].charImageId).style.animationName = "EnemyIntroAnim";
                     break;
@@ -236,77 +239,94 @@ function EnemySpawnHandler (PreviousEnemy = undefined)
     
 }
 
+// Enables the enemy picture.
 function EnemyIntro(Enemy)
 {
     document.getElementById(Enemy).style.display="block";
 }
 
-
-function EnemyExit(Enemy)
+// Makes the enemy exit the animation. Checks if the enemy is in transition so not multiple enemies appear.
+function EnemyExit(Enemy, inTransition)
 {
-    console.log("EnemyExit")
-    document.getElementById(Enemy).style.animationName = "EnemyExitAnim";
-    enemiesDestroyed ++;
-    setTimeout (EnemySpawnHandler, 500,Enemy);
+    if (inTransition)
+    {
+        console.log("EnemyExit")
+        document.getElementById(Enemy).style.animationName = "EnemyExitAnim";
+        enemiesDestroyed ++;
+        setTimeout (EnemySpawnHandler, 500,Enemy);
+    }
 }
-//#region PlayerAttacks
+//#endregion
 
+//#region Player Attacks
+// Attacks the enemy. Also checks if the enemy is in a transition.
 function PhysicalAttack()
 { 
-    switch(enemy)
+    if (!enemyTransition)
+    {
+        switch(enemy)
         {
-            case "EnemyOrc":
-                EnemyExit("EnemyOrc");
+            case enemies[0]:
+                EnemyExit(enemies[0], enemyTransition= true);
                 break;
-            case "EnemyMage":
+            case enemies[1]:
                 DamageByMage();
                 break;
-            case "EnemyTownsfolk":
+            case enemies[2]:
                 DamageByTownsfolk();
         }
     console.log(enemy);    
     console.log("Player used Physical Attack")
+    }
 }
 
+// Attacks the enemy. Also checks if the enemy is in a transition.
 function MagicalAttack()
 {
-    switch(enemy)
+    if (!enemyTransition)
+    {
+        switch(enemy)
         {
-            case "EnemyOrc":
+            case enemies[0]:
                 DamageByOrc();
                 break;
-            case "EnemyMage":
-                EnemyExit("EnemyMage");
+            case enemies[1]:
+                EnemyExit(enemies[1], enemyTransition= true);
                 break;
-            case "EnemyTownsfolk":
+            case enemies[2]:
                 DamageByTownsfolk();
                 break;
         }
     console.log(enemy);
     console.log("Player used Magical Attack")
+    }
+    
 }
 
+// Attacks the enemy. Also checks if the enemy is in a transition.
 function IntimidateAttack()
 {
-    switch(enemy)
+    if (!enemyTransition)
+    {
+        switch(enemy)
         {
-            case "EnemyOrc":
+            case enemies[0]:
                 DamageByOrc();
                 break;
-            case "EnemyMage":
+            case enemies[1]:
                 DamageByMage();
-            case "EnemyTownsfolk":
-                EnemyExit("EnemyTownsfolk");
+            case enemies[2]:
+                EnemyExit(enemies[2], enemyTransition= true);
                 break;
         }
     console.log(enemy);  
     console.log("Player used Intimidate Attack")
-     
+    }
 }
-
 //#endregion
 
-
+//#region Enemy Attacks
+// Attacks the user. Attacks the player with a random value based on the min and max damage of the enemy.
 function DamageByOrc()
 {
     var damage = getRandomInt(enemyProperty[0].minDamage,enemyProperty[0].maxDamage)
@@ -317,6 +337,7 @@ function DamageByOrc()
         KillPlayer();} 
 }
 
+// Attacks the user. Attacks the player with a random value based on the min and max damage of the enemy.
 function DamageByMage()
 {
     var damage = getRandomInt(enemyProperty[1].minDamage,enemyProperty[1].maxDamage)
@@ -327,6 +348,7 @@ function DamageByMage()
         KillPlayer();} 
 }
 
+// Attacks the user. Attacks the player with a random value based on the min and max damage of the enemy.
 function DamageByTownsfolk()
 {
     var damage = getRandomInt(enemyProperty[2].minDamage,enemyProperty[2].maxDamage)
@@ -337,32 +359,26 @@ function DamageByTownsfolk()
         KillPlayer();}
 }
 
-
-//Instead of calculating the random value in each function I decided to make it separate. So This function takes a value from the Damage scripts and returns the randomized value. 
-//Not a necessary function but I wanted to explore different methods to return a value from other functions.
+// This function takes a value from the Damage scripts and returns the randomized value. 
 function getRandomInt(min, max) 
 {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+//#endregion
 
-//When this gets called it will change som css and do some functions
+//#region Ending
+// When this gets called it will change som css.
 function KillPlayer()
 {
     document.getElementById("barHealth").style.width = 0 + "%";
-    //Add a game over popup with the Highscore.
-    //add a Restart game function and start it here?
     GameOverScreen();
-
 }
 
-function SfxHandler(sfxtype)
+// Disables the displays based on if the enemies killed the player or if the timer was run out.
+// Shows the Score with enemiesDestroyed
+function GameOverScreen()
 {
-    //Make a sound play depending on what the sfx type is inpouted in the function SfxHandler.
-    //Will probably be enemyTakingDamage, PlayerTakingDamage etc 
-} 
-
-function GameOverScreen(PlayerScore)
-{
+    gameStarted = false;
     if(playerHp>0)
     {
         document.getElementById("Enemies").style.display="none";
@@ -375,8 +391,7 @@ function GameOverScreen(PlayerScore)
     document.getElementById("buttonHolder").style.display="none";
     document.getElementById("Score").innerText = enemiesDestroyed;
 }
-
-
+//#endregion
 </script>
 </body>
 </html>
