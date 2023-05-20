@@ -14,7 +14,6 @@ With alot more time I could probably:
 - Make a tutorial with highlights of the buttons aswell as forcing the user to learn how to play.
 - Add sound effects.
 
-
 ### **Budget Conclusion:**
 Spent it almost right. I didnt have any SFX and spent that time into the enemy loop instead. Spent more of my time with improving the game experience instead. I made a promise that the game would be harder and harder but that was changed. And also that the program shouldnt have fancy animations or a page with gameplay rules **which I did**.   
 
