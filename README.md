@@ -42,7 +42,6 @@ Read the instructions:
     Intimidate Attack / or the keybutton D
     </span>
 <br>
-
 - *3.*
 Press the button *"Fight"*.
 
