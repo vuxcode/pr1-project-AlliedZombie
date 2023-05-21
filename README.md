@@ -4,7 +4,7 @@
 Most of the documentation is in the [bug-list](/bug-list.md) or inside the [index](/index.html) as comments.
 
 ### **Experiences:**
-- Learnt more about JS and CSS. The Style-dock was fun to code in CSS with animations and such since that was new to me and the JS was nice because I noticed how much better I've become since the start of the course. I had some big problems which I was proud of solving (etc bug list 3-4).
+- Learnt more about JS and CSS. The Style.css was fun to code with animations and such since that was new to me and the JS was nice because I noticed how much better I've become since the start of the course. I had some big problems which I was proud of solving (etc bug list 3-4).
 
 - I adapted the structure of the game to be a better experience for the user. Instead of having a timer that makes it harder and harder for the user to reach the end, its now accessible for anyone and does not punish the users reaction-time. Aswell as matching the color of the buttons and enemies to furthermore increase the user experience.
 
